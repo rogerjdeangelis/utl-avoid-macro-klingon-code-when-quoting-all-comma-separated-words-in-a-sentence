@@ -6,6 +6,16 @@ Avoid macro klingon code when quoting all comma separated words in a sentence
 
     Avoid macro klingon code when quoting all comma separated words in a sentence
 
+      THREE SOLUTIONS
+
+           1 single quote Ted Clay
+             tclay@ashlandhome.net  (541) 482-6435
+           2 double quote Ted Clay
+             tclay@ashlandhome.net  (541) 482-6435
+           3 Bart
+             Bartosz Jablonski
+             yabwon@gmail.com
+
     Avoid code like this  (8 %s and 7 functions)
     %let new=%unquote(%str(%')%qsysfunc(tranwrd(%superq(rep_run),%str(,),','))%str(%'));
 
@@ -117,6 +127,36 @@ Avoid macro klingon code when quoting all comma separated words in a sentence
 
     RES='CLOSING RUN INSURANCE' , 'INSURANCE' , 'SECONDARY CLOSING RUN INSURANCE' , 'BUSINESS INSURANCE' , 'RI_BCT'
 
+    /*____   _                _
+    |___ /  | |__   __ _ _ __| |_
+      |_ \  | `_ \ / _` | `__| __|
+     ___) | | |_) | (_| | |  | |_
+    |____/  |_.__/ \__,_|_|   \__|
+
+    */
+
+    %let rep_run=closing run insurance,insurance,secondary closing run insurance,business insurance,RI_BCT;
+
+    %loadPackage(macroarray)
+    /*
+    %helpPackage(macroarray, '%do_over()')
+    %helpPackage(macroarray, '%array()')
+    %helpPackage(macroarray, '%deleteMacArray()')
+    */
+
+
+    %barray(a[5] $ 128
+    , before=length tmp $ 1024; tmp=upcase(symget('rep_run'))
+    , function=quote(strip(scan(tmp,_I_,",")))
+    , macarray=Y
+    )
+
+    %put %do_over(A,between=%str(,));
+
+    %deleteMacArray(A,macarray=Y)
+
+    "CLOSING RUN INSURANCE","INSURANCE","SECONDARY CLOSING RUN INSURANCE","BUSINESS INSURANCE","RI_BCT"
+
     /*              _
       ___ _ __   __| |
      / _ \ `_ \ / _` |
@@ -124,3 +164,4 @@ Avoid macro klingon code when quoting all comma separated words in a sentence
      \___|_| |_|\__,_|
 
     */
+
